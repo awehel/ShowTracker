@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect} from "react";
 import axios from "axios";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -7,12 +7,8 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import MyContext from "../context/MyContext";
 import { Link } from "@mui/material";
 import { Button } from "@mui/material";
-import { ButtonGroup } from "@mui/material";
-import { display } from "@mui/system";
-
 
 const Wall = (props)=>{
 
@@ -20,35 +16,27 @@ const Wall = (props)=>{
     const id = userId
     const pUserId = pUser
     const [messages, setMessages] = useState([])
-    const [loaded, setLoaded] = useState(false)
-    const context = useContext(MyContext);
-
 
      useEffect(()=>{
         const getComments = async ()=>{
             try {
-                console.log(id)
-                console.log(pUserId)
+                // console.log(id)
+                // console.log(pUserId)
                 const resp = await axios.get(`http://localhost:8000/api/posts/${id}`)
-                console.log(resp.data)
+                // console.log(resp.data)
                 setMessages(resp.data)
-                setLoaded(true)
             } catch (error) {
                 console.log(error)
             }
         }
-
         setTimeout(getComments, 100)
 
-        
-    }, [])
-
+    }, [id])
 
     function stringToColor(string) {
         let hash = 0;
         let i;
-
-        /* eslint-disable no-bitwise */
+        
         for (i = 0; i < string.length; i += 1) {
             hash = string.charCodeAt(i) + ((hash << 5) - hash);
         }
@@ -59,7 +47,6 @@ const Wall = (props)=>{
             const value = (hash >> (i * 8)) & 0xFF;
             color += `00${value.toString(16)}`.slice(-2);
         }
-        /* eslint-enable no-bitwise */
 
         return color;
     }
@@ -69,14 +56,13 @@ const Wall = (props)=>{
             sx: {
                 bgcolor: stringToColor(name),
             },
-            // children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
         };
     }
 
     const deleteComment =(postId)=>{
         axios.delete(`http://localhost:8000/api/comment/${postId}`)
         .then((res)=>{
-            console.log(res.data)
+            // console.log(res.data)
             setMessages(messages.filter(message=> message._id !== postId))
         })
         .catch((err)=>console.log(err))
@@ -134,12 +120,3 @@ const Wall = (props)=>{
 }
 
 export default Wall
-// messages.map((message, index)=>(
-//     <div key={index}>
-//         {message.message} posted by {
-//             message.author?
-//             <span>{message.author.username}</span>
-//             :null
-//         }
-//     </div>
-// ))

@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import Home from './components/Home';
 import OneShow from './components/OneShow';
@@ -12,6 +12,7 @@ import UserList from './components/Users';
 import MyContext from './context/MyContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+
 
 const theme = createTheme({
     palette:{
@@ -42,7 +43,6 @@ const theme = createTheme({
 
 function App() {
     
-    const [loggedIn, setLoggedIn] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState({})
 
     return (

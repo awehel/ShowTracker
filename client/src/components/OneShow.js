@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState} from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
@@ -9,7 +9,6 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import NavBar from "./NavBar";
 import { Link } from "@mui/material";
-import MyContext from "../context/MyContext";
 import { Chip } from "@mui/material";
 import { Stack } from "@mui/material";
 
@@ -20,20 +19,19 @@ const OneShow = (props)=>{
 
     const navigate = useNavigate()
 
-    const context = useContext(MyContext)
-
     const [oneShow, setOneShow] = useState({})
 
     useEffect(()=>{
-        axios.get(
-            `https://api.themoviedb.org/3/tv/${id}?api_key=0b8bef9997166d6ef69067b1361557c3`
-        )
-        .then((res)=>{
-            console.log(res.data)
-            setOneShow(res.data)
-        })
-        .catch((err)=>console.log(err))
-    }, [])
+        axios
+            .get(
+                `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}`
+            )
+            .then((res) => {
+                // console.log(res.data);
+                setOneShow(res.data);
+            })
+            .catch((err) => console.log(err));
+    }, [id])
 
     const submitHandler = ()=>{
         
@@ -42,14 +40,14 @@ const OneShow = (props)=>{
                 withCredentials: true
             })
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
+                // console.log(res);
+                // console.log(res.data);
                 navigate("/");
             })
             .catch((err) => {
-                console.log(err.response);
-                console.log(err.response.data);
-                console.log(err.response.data.errors);
+                // console.log(err.response);
+                // console.log(err.response.data);
+                // console.log(err.response.data.errors);
                 navigate("/")
             });
     }
@@ -148,7 +146,6 @@ const OneShow = (props)=>{
                                     </Typography>
                                 ))
                                 : null}
-
                             <Typography
                                 variant="subtitle1"
                                 fontWeight="600"
@@ -195,6 +192,7 @@ const OneShow = (props)=>{
                                         <Box key={index} sx={{ m: 1 }}>
                                             <img
                                                 src={`https://www.themoviedb.org/t/p/h30${network.logo_path}`}
+                                                alt={network.name}
                                             />
                                         </Box>
                                     ))

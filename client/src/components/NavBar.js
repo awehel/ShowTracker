@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef, useEffect} from "react";
+import React, {useState, useContext,  useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import MyContext from "../context/MyContext";
@@ -11,7 +11,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import PeopleIcon from "@mui/icons-material/People";
 import { Link } from "@mui/material";
 import { Avatar } from "@mui/material";
-
 import LogoutIcon from "@mui/icons-material/Logout";
 
 
@@ -27,15 +26,14 @@ const NavBar = (props) =>{
         axios
             .post(
                 "http://localhost:8000/api/users/logout",
-                {}, // As a post request, we MUST send something with our request.
-                // Because we're not adding anything, we can send a simple MT object
+                {}, 
                 {
                     withCredentials: true,
                 }
             )
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
+                // console.log(res);
+                // console.log(res.data);
                 context.loggedIn = false
                 navigate("/login");
             })
@@ -49,7 +47,7 @@ const NavBar = (props) =>{
             {withCredentials: true}
         )
         .then((res)=>{
-            console.log(res.data)
+            // console.log(res.data)
             setUser(res.data)
             context.setLoggedInUser(user)
         })
@@ -57,39 +55,6 @@ const NavBar = (props) =>{
             console.log(err)
         })
     }, [])
-
-
-    
-
-    function stringToColor(string) {
-        let hash = 0;
-        let i;
-
-         /* eslint-disable no-bitwise */
-        for (i = 0; i < string.length; i += 1) {
-            hash = string.charCodeAt(i) + ((hash << 5) - hash);
-        }
-
-        let color = "#";
-
-        for (i = 0; i < 3; i += 1) {
-             const value = (hash >> (i * 8)) & 0xff;
-            color += `00${value.toString(16)}`.slice(-2);
-        }
-         /* eslint-enable no-bitwise */
-
-        return color;
-    }
-
-    function stringAvatar(name) {
-        return {
-            sx: {
-                bgcolor: stringToColor(name),
-            },
-             // children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-        };
-    }
-
 
     return (
         <Box sx={{ flexGrow: 1, alignItems: "center" }}>
@@ -141,13 +106,11 @@ const NavBar = (props) =>{
                             <Link href={`/user/${user.username}`} underline="none">
                                 <IconButton size="large" edge="end" color="inherit">
                                     <Avatar
-                                        // {...stringAvatar(user.username)}
                                         sx={{bgcolor:'#eaac8b'}}
                                         alt={user.username}
                                         src="placeholder.jpg"
-                                        // sx={{ bgcolor: orange[500] }}
                                     />
-                                    {/* <AccountCircle /> */}
+                                    
                                 </IconButton>
                             </Link>
                         </Box>

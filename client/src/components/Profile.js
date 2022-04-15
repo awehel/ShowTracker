@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import axios from "axios";
 import NavBar from "./NavBar";
 import Comments from "./Comments";
 import Wall from "./Wall";
 import { Container } from "@mui/material";
 import { Grid } from "@mui/material";
-import { ImageList } from "@mui/material";
-import { ImageListItem } from "@mui/material";
 import { Card } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Divider } from "@mui/material";
+
 
 
 const Profile = (props)=>{
@@ -23,10 +20,7 @@ const Profile = (props)=>{
     const [showList, setShowList] = useState([])
     const [loaded, setLoaded] = useState(false)
     const [user, setUser] = useState({});
-    const [comment, setComment] = useState({})
     const [baseUser, setBaseUser] = useState({})
-
-    const navigate = useNavigate()
 
     const activeUserId = user._id
     const baseUserId = baseUser._id
@@ -36,26 +30,26 @@ const Profile = (props)=>{
             withCredentials: true
         })
         .then((res)=>{
-            console.log(res.data)
+            // console.log(res.data)
             setShowList(res.data)
             setLoaded(true)
         })
         .catch((err)=>{
             console.log(err)
         })
-    }, [])
+    }, [username])
 
     useEffect(() => {
         axios
             .get("http://localhost:8000/api/users", { withCredentials: true })
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setUser(res.data);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [username]);
 
     useEffect(() => {
         const getHomeUser = async () => {
@@ -63,7 +57,7 @@ const Profile = (props)=>{
                 const resp = await axios.get(
                     `http://localhost:8000/api/users/${username}`
                 );
-                console.log(resp.data);
+                // console.log(resp.data);
                 setBaseUser(resp.data);
                 
             } catch (error) {
@@ -71,7 +65,7 @@ const Profile = (props)=>{
             }
         };
         getHomeUser();
-    }, []);
+    }, [username]);
 
     const submitHandler = (nameFromBelow, activeUser) => {
         
@@ -144,23 +138,3 @@ const Profile = (props)=>{
 
 export default Profile
 
-
-//   showList.map((show, index)=>(
-//                                 <Card sx={{maxWidth:250}} key={index}>
-//                                     {/* <h3>{show.name}</h3> */}
-//                                     <CardMedia 
-//                                         component='img'
-//                                         alt={`${show.name}`}
-//                                         image={`https://image.tmdb.org/t/p/w500${show.poster_path}` } />
-//                                 {
-                                    // show.savedBy.find(entry => entry.username === `${user.username}` )?
-                                    // <p>Test</p>:null
-                                //     `${username}` === `${user.username}`?
-                                //     <CardActions>
-                                //         <button onClick={()=>submitHandler(`${show.name}`, user)}>Delete</button>
-                                //     </CardActions>
-                                //     :null
-
-                                // }
-//                                 </Card>
-//                             )):

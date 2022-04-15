@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
-import { Container } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Link } from "@mui/material";
 import { Box } from "@mui/material";
@@ -34,7 +33,7 @@ const Register = (props) => {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setUser({
                     username: "",
                     email: "",
@@ -61,7 +60,6 @@ const Register = (props) => {
                 ) : null}
                 <form onSubmit={register}>
                     <div>
-                        {/* <label>Username</label> */}
                         {errors.username ? (
                             <Typography color="error" sx={{ marginBotton: 2 }}>
                                 {errors.username.message}
@@ -79,7 +77,6 @@ const Register = (props) => {
                         />
                     </div>
                     <div>
-                        {/* <label>Email</label> */}
                         {errors.email ? (
                             <Typography color="error" sx={{ marginBotton: 2 }}>
                                 {errors.email.message}
@@ -97,7 +94,6 @@ const Register = (props) => {
                         />
                     </div>
                     <div>
-                        {/* <label>Password</label> */}
                         {errors.password ? (
                             <Typography color="error" sx={{ marginBotton: 2 }}>
                                 {errors.password.message}
@@ -115,7 +111,6 @@ const Register = (props) => {
                         />
                     </div>
                     <div>
-                        {/* <label>Confirm Password</label> */}
                         {errors.confirmPassword ? (
                             <Typography color="error" sx={{ marginBotton: 2 }}>
                                 {errors.confirmPassword.message}
@@ -141,8 +136,6 @@ const Register = (props) => {
                 <Typography sx={{ marginTop: 3 }}>
                     <Link href={"/login"}>Already have an account? Sign in</Link>
                 </Typography>
-
-
             </Box>
         </Grid>
     );
